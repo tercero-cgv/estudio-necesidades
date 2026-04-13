@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio de Necesidades 2026-2027 — Escuela Celso González Vaillant</title>
+<style>
+  :root {
+    --primary: #7C3AED;
+    --primary-light: #EDE9FE;
+    --primary-dark: #5B21B6;
+    --accent: #D97706;
+    --accent-light: #FEF3C7;
+    --success: #059669;
+    --success-light: #D1FAE5;
+    --danger: #DC2626;
+    --danger-light: #FEE2E2;
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-500: #6B7280;
+    --gray-600: #4B5563;
+    --gray-700: #374151;
+    --gray-800: #1F2937;
+    --gray-900: #111827;
+    --white: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --radius: 8px; --radius-lg: 12px; --radius-xl: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #F5F3FF; color: var(--gray-800); min-height: 100vh; }
+
+  .top-nav { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 24px; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+  .nav-brand { padding: 16px 0; font-weight: 700; font-size: 15px; color: var(--primary-dark); margin-right: 32px; letter-spacing: -0.3px; }
+  .nav-tabs { display: flex; gap: 4px; }
+  .nav-tab { padding: 6px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; background: transparent; color: var(--gray-500); transition: all 0.15s; font-family: inherit; }
+  .nav-tab:hover { background: var(--gray-100); color: var(--gray-800); }
+  .nav-tab.active { background: var(--primary-light); color: var(--primary-dark); }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* CLOSED SCREEN */
+  .closed-screen { min-height: calc(100vh - 57px); background: linear-gradient(135deg, #EDE9FE, #F5F3FF); display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .closed-card { background: white; border-radius: var(--radius-xl); padding: 48px 40px; max-width: 500px; width: 100%; box-shadow: var(--shadow-lg); text-align: center; }
+  .closed-card .closed-icon { font-size: 56px; margin-bottom: 20px; }
+  .closed-card h2 { font-size: 22px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; }
+  .closed-card p { font-size: 15px; color: var(--gray-500); line-height: 1.6; }
+  .closed-card .closed-detail { margin-top: 20px; background: var(--gray-50); border-radius: var(--radius-lg); padding: 14px 20px; font-size: 13px; color: var(--gray-600); border: 1px solid var(--gray-200); }
+
+  /* FORM */
+  .form-page { min-height: calc(100vh - 57px); background: linear-gradient(135deg, #EDE9FE 0%, #F5F3FF 50%, #FEF3C7 100%); padding: 40px 20px 60px; }
+  .form-container { max-width: 680px; margin: 0 auto; }
+  .form-header { background: var(--primary-dark); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: 32px 36px; color: white; }
+  .form-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.5px; }
+  .form-header p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+  .school-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; font-size: 13px; margin-top: 14px; }
+  .deadline-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,200,0,0.2); border: 1px solid rgba(255,200,0,0.4); padding: 6px 14px; border-radius: 20px; font-size: 13px; margin-top: 10px; color: #FEF9C3; }
+  .form-body { background: var(--white); border-radius: 0 0 var(--radius-xl) var(--radius-xl); padding: 32px 36px 40px; box-shadow: var(--shadow-lg); }
+  .form-section { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--gray-100); }
+  .form-section:last-of-type { border-bottom: none; margin-bottom: 0; }
+  .field-label { display: block; font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 10px; }
+  .q-num { display: inline-block; width: 24px; height: 24px; background: var(--primary-light); color: var(--primary-dark); border-radius: 50%; font-size: 12px; font-weight: 700; text-align: center; line-height: 24px; margin-right: 8px; }
+  .required { color: var(--danger); margin-left: 2px; }
+  .field-hint { font-size: 12px; color: var(--gray-500); margin-top: -6px; margin-bottom: 10px; padding-left: 32px; }
+  .text-input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); font-size: 14px; font-family: inherit; color: var(--gray-800); transition: border-color 0.15s, box-shadow 0.15s; background: var(--gray-50); }
+  .text-input:focus { outline: none; border-color: var(--primary); background: var(--white); box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+  .text-input::placeholder { color: var(--gray-400); }
+  textarea.text-input { resize: vertical; min-height: 80px; }
+  .radio-group, .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+  .radio-option, .checkbox-option { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); cursor: pointer; transition: all 0.15s; background: var(--gray-50); font-size: 14px; color: var(--gray-700); user-select: none; }
+  .radio-option:hover, .checkbox-option:hover { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); }
+  .radio-option input, .checkbox-option input { accent-color: var(--primary); width: 16px; height: 16px; flex-shrink: 0; }
+  .radio-option.selected, .checkbox-option.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary-dark); font-weight: 500; }
+  .grades-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .submit-btn { width: 100%; padding: 14px; background: var(--primary-dark); color: white; border: none; border-radius: var(--radius-lg); font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.15s; margin-top: 28px; letter-spacing: 0.2px; font-family: inherit; }
+  .submit-btn:hover { background: var(--primary); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .success-banner { display: none; background: var(--success-light); border: 1.5px solid var(--success); border-radius: var(--radius-lg); padding: 20px 24px; text-align: center; margin-top: 20px; color: var(--success); font-weight: 600; font-size: 15px; }
+
+  /* LOGIN */
+  .login-screen { min-height: calc(100vh - 57px); background: linear-gradient(135deg, #EDE9FE, #F5F3FF); display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .login-card { background: white; border-radius: var(--radius-xl); padding: 40px; max-width: 380px; width: 100%; box-shadow: var(--shadow-lg); text-align: center; }
+  .login-card h2 { font-size: 20px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+  .login-card p { font-size: 13px; color: var(--gray-500); margin-bottom: 24px; }
+  .login-card .text-input { margin-bottom: 14px; }
+  .login-btn { width: 100%; padding: 12px; background: var(--primary-dark); color: white; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+  .login-btn:hover { background: var(--primary); }
+  .login-error { color: var(--danger); font-size: 13px; margin-top: 10px; display: none; }
+
+  /* DASHBOARD */
+  .dashboard-page { padding: 32px 24px 60px; max-width: 1100px; margin: 0 auto; }
+  .dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+  .dash-header h2 { font-size: 22px; font-weight: 700; color: var(--gray-900); letter-spacing: -0.4px; }
+  .dash-header p { font-size: 13px; color: var(--gray-500); margin-top: 2px; }
+  .header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { padding: 8px 18px; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1.5px solid transparent; font-family: inherit; }
+  .btn-secondary { background: white; color: var(--gray-700); border-color: var(--gray-200); }
+  .btn-secondary:hover { background: var(--gray-50); }
+  .btn-success { background: var(--success); color: white; }
+  .btn-success:hover { opacity: 0.9; }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-danger:hover { opacity: 0.9; }
+  .btn-warning { background: #F59E0B; color: white; }
+  .btn-warning:hover { opacity: 0.9; }
+  .btn-open { background: var(--success); color: white; }
+  .btn-open:hover { opacity: 0.9; }
+
+  /* CONTROL CARD */
+  .control-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+  .control-card-title { font-size: 13px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+  .control-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .control-group { display: flex; flex-direction: column; gap: 4px; }
+  .control-group label { font-size: 12px; font-weight: 600; color: var(--gray-600); }
+  .control-group input[type="datetime-local"] { padding: 8px 12px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); font-size: 13px; font-family: inherit; color: var(--gray-800); background: var(--gray-50); }
+  .control-group input[type="datetime-local"]:focus { outline: none; border-color: var(--primary); }
+  .tz-note { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+  .status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+  .status-open { background: var(--success-light); color: #065F46; }
+  .status-closed { background: var(--danger-light); color: #991B1B; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .status-dot.open { background: var(--success); animation: pulse 1.5s infinite; }
+  .status-dot.closed { background: var(--danger); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .stat-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px 20px; box-shadow: var(--shadow-sm); }
+  .stat-label { font-size: 12px; color: var(--gray-500); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-value { font-size: 28px; font-weight: 700; color: var(--gray-900); margin-top: 4px; letter-spacing: -1px; }
+  .stat-sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+  /* CHARTS */
+  .charts-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .chart-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); }
+  .chart-card h3 { font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .bar-label { font-size: 12px; color: var(--gray-600); width: 110px; flex-shrink: 0; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-track { flex: 1; height: 18px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .bar-count { font-size: 12px; color: var(--gray-500); width: 20px; text-align: right; font-weight: 600; }
+
+  /* FILTERS */
+  .filters-bar { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 14px 20px; margin-bottom: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; box-shadow: var(--shadow-sm); }
+  .filters-bar label { font-size: 13px; font-weight: 600; color: var(--gray-600); }
+  .filter-select { padding: 7px 12px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); font-size: 13px; font-family: inherit; color: var(--gray-700); background: var(--gray-50); cursor: pointer; }
+  .filter-select:focus { outline: none; border-color: var(--primary); }
+
+  /* TABLE */
+  .table-wrap { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .table-header { padding: 14px 20px; border-bottom: 1px solid var(--gray-100); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .table-title { font-size: 15px; font-weight: 600; color: var(--gray-800); }
+  .result-count { font-size: 13px; color: var(--gray-500); background: var(--gray-100); padding: 3px 10px; border-radius: 12px; }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: var(--gray-50); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); border-bottom: 1px solid var(--gray-200); white-space: nowrap; cursor: pointer; user-select: none; }
+  thead th:hover { background: var(--gray-100); }
+  tbody tr { border-bottom: 1px solid var(--gray-100); transition: background 0.1s; }
+  tbody tr:hover { background: #FAFAFF; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td { padding: 11px 14px; color: var(--gray-700); vertical-align: top; }
+  .teacher-name { font-weight: 600; color: var(--gray-900); }
+  .grade-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin: 1px 2px; background: var(--primary-light); color: var(--primary-dark); }
+  .tag-tech { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin: 1px 2px; background: #DBEAFE; color: #1E40AF; }
+  .tag-equipo { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; margin: 1px 2px; background: var(--success-light); color: #065F46; }
+  .btn-row { display: flex; gap: 6px; }
+  .btn-icon { padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid var(--gray-200); background: white; color: var(--gray-600); transition: all 0.1s; font-family: inherit; }
+  .btn-icon:hover { background: var(--gray-100); }
+  .btn-icon.delete:hover { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--gray-400); font-size: 15px; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: white; border-radius: var(--radius-xl); padding: 28px 32px; max-width: 560px; width: 100%; max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+  .modal h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--gray-900); }
+  .modal-row { display: flex; gap: 8px; margin-bottom: 12px; font-size: 13px; border-bottom: 1px solid var(--gray-100); padding-bottom: 12px; flex-wrap: wrap; }
+  .modal-row:last-of-type { border-bottom: none; }
+  .modal-key { font-weight: 600; color: var(--gray-500); min-width: 160px; }
+  .modal-val { color: var(--gray-800); flex: 1; }
+
+  /* LOADING */
+  .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.85); z-index: 300; align-items: center; justify-content: center; flex-direction: column; gap: 14px; }
+  .loading-overlay.show { display: flex; }
+  .spinner { width: 36px; height: 36px; border: 3px solid var(--gray-200); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-overlay p { font-size: 14px; color: var(--gray-500); font-weight: 500; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--gray-900); color: white; padding: 12px 20px; border-radius: var(--radius-lg); font-size: 14px; font-weight: 500; z-index: 400; transform: translateY(80px); opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); max-width: 320px; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 640px) {
+    .form-body, .form-header { padding: 24px 20px; }
+    .dashboard-page { padding: 20px 16px 60px; }
+    .bar-label { width: 80px; }
+    .nav-brand { font-size: 13px; margin-right: 16px; }
+    .control-row { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="nav-brand">📋 Estudio de Necesidades 2026–2027</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-form" onclick="showPage('form')">Formulario</button>
+    <button class="nav-tab" id="tab-dashboard" onclick="showPage('dashboard')">Panel del Maestro</button>
+  </div>
+</nav>
+
+<!-- FORM PAGE -->
+<div id="page-form" class="page active">
+  <div class="closed-screen" id="form-closed" style="display:none">
+    <div class="closed-card">
+      <div class="closed-icon">🔒</div>
+      <h2>Formulario cerrado</h2>
+      <p>El período para completar el Estudio de Necesidades de Equipo 2026–2027 ha concluido. Gracias a todos los maestros que participaron.</p>
+      <div class="closed-detail" id="closed-detail-msg"></div>
+    </div>
+  </div>
+  <div class="form-page" id="form-open">
+    <div class="form-container">
+      <div class="form-header">
+        <h1>Estudio de Necesidades de Equipo 2026–2027</h1>
+        <p>Asignación de fondos al Presupuesto Escolar para la compra de equipos que faciliten la recuperación académica y la labor del docente en la sala de clases. Lea cuidadosamente y responda cada premisa.</p>
+        <span class="school-badge">🏫 Escuela Celso González Vaillant &nbsp;·&nbsp; Código 34793</span><br>
+        <span class="deadline-badge" id="deadline-badge" style="display:none">⏰ Fecha límite: <span id="deadline-display"></span></span>
+      </div>
+      <div class="form-body">
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">1</span>Nombre y apellidos del maestro<span class="required">*</span></label>
+          <input type="text" class="text-input" id="f-nombre" placeholder="Ejemplo: María López González" />
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">2</span>Nombre de la escuela</label>
+          <div class="radio-group"><label class="radio-option selected"><input type="radio" name="escuela" value="Escuela Celso González Vaillant" checked> Escuela Celso González Vaillant</label></div>
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">3</span>Código</label>
+          <div class="radio-group"><label class="radio-option selected"><input type="radio" name="codigo" value="34793" checked> 34793</label></div>
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">4</span>Región Educativa y Municipio</label>
+          <div class="radio-group"><label class="radio-option selected"><input type="radio" name="region" value="ORE Humacao - Loíza" checked> ORE Humacao – Loíza</label></div>
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">5</span>Materia<span class="required">*</span></label>
+          <input type="text" class="text-input" id="f-materia" placeholder="Ejemplo: Español, Matemáticas, Ciencias..." />
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">6</span>Grado<span class="required">*</span></label>
+          <p class="field-hint">Seleccione el grado o grados que atiende.</p>
+          <div class="grades-grid" id="grade-group">
+            <label class="checkbox-option"><input type="checkbox" value="SEM 1"> SEM 1</label>
+            <label class="checkbox-option"><input type="checkbox" value="PRE-K"> PRE-K</label>
+            <label class="checkbox-option"><input type="checkbox" value="Kínder"> Kínder</label>
+            <label class="checkbox-option"><input type="checkbox" value="Primero"> Primero</label>
+            <label class="checkbox-option"><input type="checkbox" value="Segundo"> Segundo</label>
+            <label class="checkbox-option"><input type="checkbox" value="Tercero"> Tercero</label>
+            <label class="checkbox-option"><input type="checkbox" value="Cuarto"> Cuarto</label>
+            <label class="checkbox-option"><input type="checkbox" value="Quinto"> Quinto</label>
+            <label class="checkbox-option"><input type="checkbox" value="Sexto"> Sexto</label>
+            <label class="checkbox-option"><input type="checkbox" value="Otro"> Otro</label>
+          </div>
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">7</span>¿Qué equipo tecnológico necesita en su salón de clase?</label>
+          <p class="field-hint">Escriba solo 1. Si ya tiene equipo puede dejarlo en blanco.</p>
+          <input type="text" class="text-input" id="f-tech" placeholder="Ejemplo: Computadora, proyector, iPad, pantalla inteligente..." />
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">8</span>Equipo para el salón</label>
+          <p class="field-hint">Seleccione los dos elementos de mayor necesidad.</p>
+          <div class="checkbox-group" id="equipo-group">
+            <label class="checkbox-option"><input type="checkbox" value="Escritorio del maestro"> Escritorio del maestro</label>
+            <label class="checkbox-option"><input type="checkbox" value="Armario"> Armario</label>
+            <label class="checkbox-option"><input type="checkbox" value="Archivo"> Archivo</label>
+            <label class="checkbox-option"><input type="checkbox" value="Silla de escritorio"> Silla de escritorio</label>
+            <label class="checkbox-option"><input type="checkbox" value="Estantes / Libreros"> Estantes / Libreros</label>
+            <label class="checkbox-option"><input type="checkbox" value="Mesa de trabajo para estudiantes"> Mesa de trabajo para estudiantes</label>
+            <label class="checkbox-option"><input type="checkbox" value="Pizarra / Pizarrón"> Pizarra / Pizarrón</label>
+            <label class="checkbox-option"><input type="checkbox" value="Sillas de estudiantes"> Sillas de estudiantes</label>
+          </div>
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">9</span>Otra necesidad (tinta, etc.)</label>
+          <p class="field-hint">Incluya modelo de la impresora y número de tinta si aplica.</p>
+          <textarea class="text-input" id="f-tinta" rows="2" placeholder="Ejemplo: Epson EcoTank ET-2720, tinta 522 negro..."></textarea>
+        </div>
+        <div class="form-section">
+          <label class="field-label"><span class="q-num">10</span>Otras necesidades o comentarios</label>
+          <textarea class="text-input" id="f-otros" rows="3" placeholder="Escriba aquí cualquier otra necesidad o comentario adicional..."></textarea>
+        </div>
+        <button class="submit-btn" id="submit-btn" onclick="submitForm()">✓ Enviar respuesta</button>
+        <div class="success-banner" id="success-msg">✅ ¡Respuesta enviada con éxito! Su información ha sido guardada.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="page-login" class="page">
+  <div class="login-screen">
+    <div class="login-card">
+      <div style="font-size:44px;margin-bottom:14px">🔒</div>
+      <h2>Panel del Maestro</h2>
+      <p>Ingrese la contraseña para acceder al panel de resultados.</p>
+      <input type="password" class="text-input" id="login-pw" placeholder="Contraseña..." onkeydown="if(event.key==='Enter')checkLogin()" />
+      <button class="login-btn" onclick="checkLogin()">Entrar al panel</button>
+      <p class="login-error" id="login-error">Contraseña incorrecta. Intente de nuevo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-page">
+    <div class="dash-header">
+      <div>
+        <h2>Panel de Resultados</h2>
+        <p>Estudio de Necesidades 2026–2027 — Escuela Celso González Vaillant</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="loadData()">🔄 Actualizar</button>
+        <button class="btn btn-success" onclick="exportCSV()">⬇ Exportar Excel/CSV</button>
+        <button class="btn btn-danger" onclick="confirmClear()">🗑 Borrar todos</button>
+      </div>
+    </div>
+
+    <!-- CONTROL CARD -->
+    <div class="control-card">
+      <div class="control-card-title">🎛 Control del formulario</div>
+      <div class="control-row">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:13px;font-weight:600;color:var(--gray-600)">Estado:</span>
+          <span class="status-pill" id="status-pill">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-text">Cargando...</span>
+          </span>
+        </div>
+        <button class="btn" id="toggle-btn" onclick="toggleFormManual()" style="min-width:180px">...</button>
+        <div style="width:1px;height:36px;background:var(--gray-200);flex-shrink:0"></div>
+        <div class="control-group">
+          <label>Cierre automático (hora de Puerto Rico)</label>
+          <input type="datetime-local" id="deadline-input" />
+          <span class="tz-note">Ingrese la hora tal como la ve en su reloj</span>
+        </div>
+        <button class="btn btn-warning" onclick="saveDeadline()">💾 Guardar fecha límite</button>
+        <button class="btn btn-secondary" onclick="clearDeadline()">✕ Quitar fecha límite</button>
+      </div>
+      <p style="font-size:12px;color:var(--gray-400);margin-top:12px" id="deadline-info">Sin fecha límite configurada.</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-label">Total respuestas</div><div class="stat-value" id="stat-total">—</div><div class="stat-sub">maestros</div></div>
+      <div class="stat-card"><div class="stat-label">Grados</div><div class="stat-value" id="stat-grades">—</div><div class="stat-sub">representados</div></div>
+      <div class="stat-card"><div class="stat-label">Materias</div><div class="stat-value" id="stat-materias">—</div><div class="stat-sub">distintas</div></div>
+      <div class="stat-card"><div class="stat-label">Necesitan tecnología</div><div class="stat-value" id="stat-tech">—</div><div class="stat-sub">maestros</div></div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card"><h3>Respuestas por grado</h3><div id="chart-grado"></div></div>
+      <div class="chart-card"><h3>Equipo más solicitado</h3><div id="chart-equipo"></div></div>
+      <div class="chart-card"><h3>Tecnología solicitada</h3><div id="chart-tech"></div></div>
+    </div>
+
+    <div class="filters-bar">
+      <label>Filtrar:</label>
+      <select class="filter-select" id="filter-grado" onchange="renderTable()"><option value="">— Todos los grados —</option></select>
+      <select class="filter-select" id="filter-materia" onchange="renderTable()"><option value="">— Todas las materias —</option></select>
+      <select class="filter-select" id="filter-equipo" onchange="renderTable()">
+        <option value="">— Todo el equipo —</option>
+        <option>Escritorio del maestro</option><option>Armario</option><option>Archivo</option>
+        <option>Silla de escritorio</option><option>Estantes / Libreros</option>
+        <option>Mesa de trabajo para estudiantes</option><option>Pizarra / Pizarrón</option><option>Sillas de estudiantes</option>
+      </select>
+      <button class="btn btn-secondary" onclick="clearFilters()">✕ Limpiar</button>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-header">
+        <span class="table-title">Todas las respuestas</span>
+        <span class="result-count" id="result-count">—</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortBy('nombre')">Maestro ↕</th>
+              <th onclick="sortBy('materia')">Materia ↕</th>
+              <th>Grado(s)</th>
+              <th>Tecnología</th>
+              <th>Equipo salón</th>
+              <th>Tinta / Otra</th>
+              <th>Otros</th>
+              <th onclick="sortBy('timestamp')">Fecha ↕</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h3 id="modal-title"></h3>
+    <div id="modal-body"></div>
+    <button class="btn btn-secondary" style="margin-top:16px" onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+  <p id="loading-msg">Cargando...</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, setDoc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyDuizIqCkWKQIDeDQsQ4XJvp3bjEQS0bSo",
+    authDomain: "estudio-necesidades-cgv.firebaseapp.com",
+    projectId: "estudio-necesidades-cgv",
+    storageBucket: "estudio-necesidades-cgv.firebasestorage.app",
+    messagingSenderId: "918635380930",
+    appId: "1:918635380930:web:4caba097216603ea1c7b5b"
+  });
+
+  const db = getFirestore(app);
+  window._db = db;
+  window._fs = { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, setDoc, getDoc };
+  document.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+<script>
+  const PASS    = "lozada2025";
+  const COL     = "respuestas";
+  const CFG     = "config";
+  const CFG_DOC = "formConfig";
+
+  let authenticated = false;
+  let allData = [];
+  let sortField = 'timestamp';
+  let sortAsc = false;
+  let formConfig = { isOpen: true, deadline: null };
+  // deadline is stored as "YYYY-MM-DDTHH:MM" (datetime-local string, local time)
+  // We NEVER convert to UTC — we compare using new Date(deadline) which
+  // the browser interprets as local time automatically.
+
+  document.addEventListener('firebase-ready', () => { checkFormStatus(); });
+
+  // ===== NAVIGATION =====
+  function showPage(id) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + (id === 'login' ? 'dashboard' : id)).classList.add('active');
+    if (id === 'dashboard') {
+      if (!authenticated) { id = 'login'; }
+      else { loadData(); loadConfig(); }
+    }
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+  }
+  window.showPage = showPage;
+
+  // ===== LOGIN =====
+  function checkLogin() {
+    const pw = document.getElementById('login-pw').value;
+    if (pw === PASS) {
+      authenticated = true;
+      document.getElementById('login-pw').value = '';
+      document.getElementById('login-error').style.display = 'none';
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-dashboard').classList.add('active');
+      loadData(); loadConfig();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+  window.checkLogin = checkLogin;
+
+  // ===== FORM STATUS CHECK =====
+  async function checkFormStatus() {
+    try {
+      const { doc, getDoc } = window._fs;
+      const snap = await getDoc(doc(window._db, CFG, CFG_DOC));
+      formConfig = snap.exists() ? snap.data() : { isOpen: true, deadline: null };
+    } catch(e) {
+      formConfig = { isOpen: true, deadline: null };
+    }
+    applyFormStatus();
+  }
+
+  function isDeadlinePassed() {
+    if (!formConfig.deadline) return false;
+    // new Date("2026-04-14T15:00") — no timezone suffix
+    // Browser treats this as LOCAL time, so 3:00 PM PR = 3:00 PM PR ✓
+    return new Date(formConfig.deadline).getTime() < Date.now();
+  }
+
+  function isFormClosed() {
+    return !formConfig.isOpen || isDeadlinePassed();
+  }
+
+  function formatDeadlineLocal(dtStr) {
+    // dtStr = "2026-04-14T15:00"
+    const d = new Date(dtStr);
+    return d.toLocaleDateString('es-PR', { day: '2-digit', month: 'long', year: 'numeric' })
+      + ' a las '
+      + d.toLocaleTimeString('es-PR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function applyFormStatus() {
+    const closed = isFormClosed();
+    if (closed) {
+      document.getElementById('form-open').style.display = 'none';
+      document.getElementById('form-closed').style.display = 'flex';
+      let reason = 'El formulario fue cerrado por el administrador.';
+      if (isDeadlinePassed() && formConfig.deadline) {
+        reason = `El período de respuestas cerró el ${formatDeadlineLocal(formConfig.deadline)}.`;
+      }
+      document.getElementById('closed-detail-msg').textContent = reason;
+    } else {
+      document.getElementById('form-open').style.display = 'block';
+      document.getElementById('form-closed').style.display = 'none';
+      // Show deadline badge if set
+      if (formConfig.deadline) {
+        document.getElementById('deadline-display').textContent = formatDeadlineLocal(formConfig.deadline);
+        document.getElementById('deadline-badge').style.display = 'inline-flex';
+        // Set auto-close timer
+        const msLeft = new Date(formConfig.deadline).getTime() - Date.now();
+        if (msLeft > 0 && msLeft < 86400000 * 7) {
+          setTimeout(() => { formConfig.isOpen = false; applyFormStatus(); }, msLeft);
+        }
+      } else {
+        document.getElementById('deadline-badge').style.display = 'none';
+      }
+    }
+  }
+
+  // ===== LOAD CONFIG (dashboard) =====
+  async function loadConfig() {
+    try {
+      const { doc, getDoc } = window._fs;
+      const snap = await getDoc(doc(window._db, CFG, CFG_DOC));
+      formConfig = snap.exists() ? snap.data() : { isOpen: true, deadline: null };
+    } catch(e) {}
+    renderConfigUI();
+  }
+
+  function renderConfigUI() {
+    const closed = isFormClosed();
+    const pill = document.getElementById('status-pill');
+    const dot  = document.getElementById('status-dot');
+    const txt  = document.getElementById('status-text');
+    const btn  = document.getElementById('toggle-btn');
+    const info = document.getElementById('deadline-info');
+
+    if (closed) {
+      pill.className = 'status-pill status-closed';
+      dot.className  = 'status-dot closed';
+      txt.textContent = 'Cerrado';
+      btn.textContent = '🔓 Abrir formulario';
+      btn.className   = 'btn btn-open';
+    } else {
+      pill.className = 'status-pill status-open';
+      dot.className  = 'status-dot open';
+      txt.textContent = 'Abierto';
+      btn.textContent = '🔒 Cerrar formulario ahora';
+      btn.className   = 'btn btn-danger';
+    }
+
+    if (formConfig.deadline) {
+      const isPast = isDeadlinePassed();
+      const dlStr  = formatDeadlineLocal(formConfig.deadline);
+      info.textContent = isPast
+        ? `⏰ El formulario se cerró automáticamente el ${dlStr}.`
+        : `⏰ El formulario se cerrará automáticamente el ${dlStr}.`;
+      document.getElementById('deadline-input').value = formConfig.deadline;
+    } else {
+      info.textContent = 'Sin fecha límite configurada. El formulario permanece abierto hasta que lo cierre manualmente.';
+      document.getElementById('deadline-input').value = '';
+    }
+  }
+
+  async function saveConfig() {
+    const { doc, setDoc } = window._fs;
+    await setDoc(doc(window._db, CFG, CFG_DOC), formConfig);
+  }
+
+  // ===== TOGGLE MANUAL =====
+  async function toggleFormManual() {
+    if (isFormClosed()) {
+      // Re-open: if deadline already passed, clear it
+      if (isDeadlinePassed()) formConfig.deadline = null;
+      formConfig.isOpen = true;
+      showToast('✅ Formulario abierto');
+    } else {
+      formConfig.isOpen = false;
+      showToast('🔒 Formulario cerrado');
+    }
+    showLoading('Guardando cambio...');
+    await saveConfig();
+    hideLoading();
+    renderConfigUI();
+    applyFormStatus();
+  }
+  window.toggleFormManual = toggleFormManual;
+
+  // ===== SAVE DEADLINE =====
+  async function saveDeadline() {
+    const val = document.getElementById('deadline-input').value;
+    // val is "YYYY-MM-DDTHH:MM" — store as-is, NO .toISOString() conversion
+    if (!val) { showToast('⚠️ Seleccione una fecha y hora.'); return; }
+    formConfig.deadline = val; // store the local time string directly
+    formConfig.isOpen   = true;
+    showLoading('Guardando fecha límite...');
+    await saveConfig();
+    hideLoading();
+    renderConfigUI();
+    applyFormStatus();
+    showToast('✅ Fecha límite guardada: ' + formatDeadlineLocal(val));
+  }
+  window.saveDeadline = saveDeadline;
+
+  // ===== CLEAR DEADLINE =====
+  async function clearDeadline() {
+    formConfig.deadline = null;
+    showLoading('Eliminando fecha límite...');
+    await saveConfig();
+    hideLoading();
+    renderConfigUI();
+    applyFormStatus();
+    showToast('Fecha límite eliminada');
+  }
+  window.clearDeadline = clearDeadline;
+
+  // ===== FORM CHECKBOXES =====
+  document.querySelectorAll('.checkbox-option input').forEach(inp => {
+    inp.addEventListener('change', function() {
+      this.closest('.checkbox-option').classList.toggle('selected', this.checked);
+    });
+  });
+
+  function getChecked(groupId) {
+    return Array.from(document.querySelectorAll('#' + groupId + ' input:checked')).map(i => i.value);
+  }
+
+  // ===== SUBMIT =====
+  async function submitForm() {
+    await checkFormStatus();
+    if (isFormClosed()) { showToast('❌ El formulario ya no acepta respuestas.'); return; }
+
+    const nombre = document.getElementById('f-nombre').value.trim();
+    const materia = document.getElementById('f-materia').value.trim();
+    const grados  = getChecked('grade-group');
+    if (!nombre)        { showToast('⚠️ Por favor escriba su nombre.'); return; }
+    if (!materia)       { showToast('⚠️ Por favor indique la materia.'); return; }
+    if (!grados.length) { showToast('⚠️ Por favor seleccione al menos un grado.'); return; }
+
+    const record = {
+      nombre, materia,
+      grados:    grados.join(', '),
+      tech:      document.getElementById('f-tech').value.trim(),
+      equipo:    getChecked('equipo-group').join(', '),
+      tinta:     document.getElementById('f-tinta').value.trim(),
+      otros:     document.getElementById('f-otros').value.trim(),
+      fecha:     new Date().toLocaleDateString('es-PR', { day:'2-digit', month:'2-digit', year:'numeric' }),
+      timestamp: Date.now()
+    };
+
+    showLoading('Guardando respuesta...');
+    document.getElementById('submit-btn').disabled = true;
+    try {
+      const { collection, addDoc } = window._fs;
+      await addDoc(collection(window._db, COL), record);
+      hideLoading();
+      ['f-nombre','f-materia','f-tech','f-tinta','f-otros'].forEach(id => document.getElementById(id).value = '');
+      document.querySelectorAll('#grade-group input, #equipo-group input').forEach(i => {
+        i.checked = false; i.closest('label').classList.remove('selected');
+      });
+      const b = document.getElementById('success-msg');
+      b.style.display = 'block';
+      setTimeout(() => b.style.display = 'none', 5000);
+      showToast('✅ Respuesta guardada correctamente');
+    } catch(e) {
+      hideLoading();
+      showToast('❌ Error al guardar: ' + e.message);
+    }
+    document.getElementById('submit-btn').disabled = false;
+  }
+  window.submitForm = submitForm;
+
+  // ===== LOAD DATA =====
+  async function loadData() {
+    showLoading('Cargando respuestas...');
+    try {
+      const { collection, getDocs, query, orderBy } = window._fs;
+      const snap = await getDocs(query(collection(window._db, COL), orderBy('timestamp','desc')));
+      allData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderStats(); populateFilters(); renderCharts(); renderTable();
+    } catch(e) { showToast('❌ Error: ' + e.message); }
+    hideLoading();
+  }
+  window.loadData = loadData;
+
+  function renderStats() {
+    document.getElementById('stat-total').textContent = allData.length;
+    const grades = new Set(allData.flatMap(r=>r.grados.split(', ').map(g=>g.trim()).filter(Boolean)));
+    document.getElementById('stat-grades').textContent = grades.size;
+    const mats = new Set(allData.map(r=>(r.materia||'').trim().toLowerCase()).filter(Boolean));
+    document.getElementById('stat-materias').textContent = mats.size;
+    document.getElementById('stat-tech').textContent = allData.filter(r=>r.tech).length;
+  }
+
+  function populateFilters() {
+    const grades = new Set(allData.flatMap(r=>r.grados.split(', ').map(g=>g.trim()).filter(Boolean)));
+    const mats   = new Set(allData.map(r=>r.materia).filter(Boolean));
+    const fg = document.getElementById('filter-grado');
+    const fm = document.getElementById('filter-materia');
+    const cg = fg.value, cm = fm.value;
+    fg.innerHTML = '<option value="">— Todos los grados —</option>';
+    ['SEM 1','PRE-K','Kínder','Primero','Segundo','Tercero','Cuarto','Quinto','Sexto','Otro']
+      .filter(g=>grades.has(g)).forEach(g=>fg.innerHTML+=`<option value="${g}"${cg===g?' selected':''}>${g}</option>`);
+    fm.innerHTML = '<option value="">— Todas las materias —</option>';
+    [...mats].sort().forEach(m=>fm.innerHTML+=`<option value="${m}"${cm===m?' selected':''}>${m}</option>`);
+  }
+
+  function clearFilters() {
+    ['filter-grado','filter-materia','filter-equipo'].forEach(id=>document.getElementById(id).value='');
+    renderTable();
+  }
+  window.clearFilters = clearFilters;
+
+  function renderCharts() {
+    const gc={};
+    allData.forEach(r=>r.grados.split(', ').map(g=>g.trim()).filter(Boolean).forEach(g=>gc[g]=(gc[g]||0)+1));
+    renderBar('chart-grado',['SEM 1','PRE-K','Kínder','Primero','Segundo','Tercero','Cuarto','Quinto','Sexto','Otro'].filter(g=>gc[g]).map(g=>({label:g,val:gc[g]})),'#7C3AED');
+    const ec={};
+    allData.forEach(r=>r.equipo.split(', ').map(e=>e.trim()).filter(Boolean).forEach(e=>ec[e]=(ec[e]||0)+1));
+    renderBar('chart-equipo',Object.entries(ec).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([l,v])=>({label:l,val:v})),'#059669');
+    const tc={};
+    allData.filter(r=>r.tech).forEach(r=>{const k=r.tech.toLowerCase().trim();tc[k]=(tc[k]||0)+1;});
+    renderBar('chart-tech',Object.entries(tc).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([l,v])=>({label:l,val:v})),'#D97706');
+  }
+
+  function renderBar(id,items,color){
+    const el=document.getElementById(id);
+    if(!items.length){el.innerHTML='<p style="color:#9CA3AF;font-size:13px;text-align:center;padding:20px 0">Sin datos aún</p>';return;}
+    const max=Math.max(...items.map(i=>i.val));
+    el.innerHTML=items.map(it=>`<div class="bar-row"><div class="bar-label" title="${it.label}">${it.label.length>14?it.label.slice(0,14)+'…':it.label}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(it.val/max*100)}%;background:${color}"></div></div><div class="bar-count">${it.val}</div></div>`).join('');
+  }
+
+  function renderTable(){
+    const fg=document.getElementById('filter-grado').value;
+    const fm=document.getElementById('filter-materia').value;
+    const fe=document.getElementById('filter-equipo').value;
+    let filtered=allData.filter(r=>{
+      if(fg&&!r.grados.split(', ').map(g=>g.trim()).includes(fg))return false;
+      if(fm&&r.materia!==fm)return false;
+      if(fe&&!r.equipo.includes(fe))return false;
+      return true;
+    });
+    filtered.sort((a,b)=>{
+      const va=(a[sortField]||0).toString(),vb=(b[sortField]||0).toString();
+      return sortAsc?va.localeCompare(vb):vb.localeCompare(va);
+    });
+    document.getElementById('result-count').textContent=filtered.length+' resultado'+(filtered.length!==1?'s':'');
+    const tbody=document.getElementById('table-body');
+    if(!filtered.length){tbody.innerHTML=`<tr><td colspan="9"><div class="empty-state">${allData.length?'No hay resultados con esos filtros.':'Aún no hay respuestas.'}</div></td></tr>`;return;}
+    tbody.innerHTML=filtered.map(r=>{
+      const grades=r.grados.split(', ').filter(Boolean).map(g=>`<span class="grade-badge">${g}</span>`).join('');
+      const equipo=r.equipo.split(', ').filter(Boolean).map(e=>`<span class="tag-equipo">${e}</span>`).join('');
+      const tech=r.tech?`<span class="tag-tech">${r.tech}</span>`:'<span style="color:#9CA3AF">—</span>';
+      return `<tr><td><span class="teacher-name">${r.nombre}</span></td><td>${r.materia||'—'}</td><td>${grades||'—'}</td><td>${tech}</td><td style="max-width:180px">${equipo||'<span style="color:#9CA3AF">—</span>'}</td><td style="max-width:140px;font-size:12px;color:#4B5563">${r.tinta||'—'}</td><td style="max-width:140px;font-size:12px;color:#4B5563">${r.otros||'—'}</td><td style="font-size:12px;color:#9CA3AF;white-space:nowrap">${r.fecha}</td><td><div class="btn-row"><button class="btn-icon" onclick="showDetail('${r.id}')">👁</button><button class="btn-icon delete" onclick="deleteRecord('${r.id}')">🗑</button></div></td></tr>`;
+    }).join('');
+  }
+  window.renderTable=renderTable;
+
+  function sortBy(f){if(sortField===f)sortAsc=!sortAsc;else{sortField=f;sortAsc=true;}renderTable();}
+  window.sortBy=sortBy;
+
+  async function deleteRecord(id){
+    if(!confirm('¿Eliminar esta respuesta?'))return;
+    showLoading('Eliminando...');
+    try{const{deleteDoc,doc}=window._fs;await deleteDoc(doc(window._db,COL,id));await loadData();showToast('Respuesta eliminada');}
+    catch(e){showToast('❌ Error: '+e.message);}
+    hideLoading();
+  }
+  window.deleteRecord=deleteRecord;
+
+  async function confirmClear(){
+    if(!confirm('¿Eliminar TODAS las respuestas? Esta acción no se puede deshacer.'))return;
+    showLoading('Eliminando todo...');
+    try{
+      const{collection,getDocs,deleteDoc,doc}=window._fs;
+      const snap=await getDocs(collection(window._db,COL));
+      await Promise.all(snap.docs.map(d=>deleteDoc(doc(window._db,COL,d.id))));
+      allData=[];renderStats();renderCharts();renderTable();showToast('Todos los registros eliminados');
+    }catch(e){showToast('❌ Error: '+e.message);}
+    hideLoading();
+  }
+  window.confirmClear=confirmClear;
+
+  function showDetail(id){
+    const r=allData.find(x=>x.id===id);if(!r)return;
+    document.getElementById('modal-title').textContent=r.nombre;
+    document.getElementById('modal-body').innerHTML=[
+      ['Nombre completo',r.nombre],['Materia',r.materia],['Grado(s)',r.grados],
+      ['Escuela','Escuela Celso González Vaillant'],['Código','34793'],['Región','ORE Humacao – Loíza'],
+      ['Equipo tecnológico',r.tech||'No indicó'],['Equipo para el salón',r.equipo||'No seleccionó'],
+      ['Tinta / Impresora',r.tinta||'No indicó'],['Otros comentarios',r.otros||'Ninguno'],
+      ['Fecha de respuesta',r.fecha],
+    ].map(([k,v])=>`<div class="modal-row"><span class="modal-key">${k}</span><span class="modal-val">${v}</span></div>`).join('');
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+  window.showDetail=showDetail;
+  function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+  window.closeModal=closeModal;
+
+  function exportCSV(){
+    if(!allData.length){showToast('No hay datos para exportar.');return;}
+    const headers=['Nombre','Materia','Grado(s)','Escuela','Código','Región','Equipo Tecnológico','Equipo Salón','Tinta/Otra','Otros','Fecha'];
+    const rows=allData.map(r=>[r.nombre,r.materia,r.grados,'Escuela Celso González Vaillant','34793','ORE Humacao - Loíza',r.tech,r.equipo,r.tinta,r.otros,r.fecha].map(v=>`"${(v||'').replace(/"/g,'""')}"`));
+    const csv='\uFEFF'+[headers,...rows].map(r=>r.join(',')).join('\r\n');
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+    a.download='Estudio_Necesidades_2026-2027.csv';a.click();
+    showToast('✅ Archivo CSV descargado');
+  }
+  window.exportCSV=exportCSV;
+
+  function showLoading(msg){document.getElementById('loading-msg').textContent=msg||'Cargando...';document.getElementById('loading').classList.add('show');}
+  function hideLoading(){document.getElementById('loading').classList.remove('show');}
+  function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
+  window.showToast=showToast;
+</script>
+</body>
+</html>
